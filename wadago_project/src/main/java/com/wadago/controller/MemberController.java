@@ -1,19 +1,21 @@
 package com.wadago.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import com.wadago.repository.MemberRepository;
 import com.wadago.vo.MemberVo;
@@ -82,13 +84,15 @@ public String logout(HttpSession session , Model model) {
 			return "redirect:/mem/signup";
 		}
   }
-  @GetMapping("/memberManagement")
-  public String memberManagement(Model model) {
-	   
-	  List<MemberVo> memberList = mr.selecMemberList();
-	  
-	  model.addAttribute("memberList", memberList);
-	  
+  
+  @GetMapping("/memberManagement/{page}")
+  public String memberManagement(@PathVariable int page , Model model) {
+
+	  Page<MemberVo> pageList = mr.findAllByGrade(PageRequest.of(page-1, 3, Sort.by(Sort.Direction.DESC, "id")), 1);
+	  // 불러올 페이지의 데이터 1페이지는 0부터 시작
+
+	  model.addAttribute("page", pageList);
+
 	  return "/mem/memberManagement";
   }
 
@@ -106,8 +110,8 @@ public String logout(HttpSession session , Model model) {
 	  }catch(Exception e){
 		  e.printStackTrace();
 	  }
-	
-	  return "/mem/memberManagement";
+	  
+	  return "redirect:/";
   }
   
   @GetMapping("/memberUpdate")
@@ -125,6 +129,7 @@ public String logout(HttpSession session , Model model) {
   public String memberUpdatePost(MemberVo memVo, HttpSession session) {
 
 	  boolean insert=false;
+	  
 		try {
 			Optional<MemberVo> memOption=mr.findById(memVo.getId()); // 기본으로 제공되는 함수
 			if(!memOption.isEmpty()) {
@@ -140,7 +145,7 @@ public String logout(HttpSession session , Model model) {
 		}
 		
 		if(insert) {
-			return "redirect:/mem/memberManagement";			
+			return "redirect:/mem/memberManagement/1";			
 		}else {
 			return "redirect:/mem/memberUpdate?id="+memVo.getId();
 		}

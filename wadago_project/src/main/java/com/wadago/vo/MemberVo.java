@@ -22,7 +22,7 @@ public class MemberVo {
 	private Date signup_time;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
-	private byte grade;
+	private int grade;
 	public String getId() {
 		return id;
 	}
@@ -65,10 +65,10 @@ public class MemberVo {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-	public byte getGrade() {
+	public int getGrade() {
 		return grade;
 	}
-	public void setGrade(byte grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 	@Override
