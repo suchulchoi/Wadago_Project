@@ -1,0 +1,64 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+
+
+	</head>
+	<style>
+		#agreeBtn{
+			margin:10px;
+			padding:10px;
+			width:100px;
+			background-color:rgb(49, 152, 255);
+			color:white;
+			border:none;
+			border-radius:50px;
+			font-size:larger;
+			
+		}
+		#denyBtn{
+			margin:10px;
+			padding:10px;
+			width:100px;
+			background-color:red;
+			color:white;
+			border:none;
+			border-radius:50px;
+		}
+	</style>
+		<body>
+			<header th:insert="header_nav.html"></header>
+			<div class="container" th:each="modify:${img}">
+				<h1>사진상세</h1>
+				
+		        <div class="image-show" id="image-show"></div>
+				
+				
+				<form th:action="@{updateGrade}" method="post" name="update">
+					<p class="input-group" hidde>
+						  <label class="input-group-text">사진 번호</label>
+						  <input name="img_num" type="number" class="form-control" th:value="${modify.img_num}" readonly>
+						  <label class="input-group-text">게시자</label>
+						  <input name="user" type="text" class="form-control" th:value="${modify.user}" readonly>
+						<label class="input-group-text">사진이름</label>
+						<input name="img_name" type="text" class="form-control" th:value="${modify.img_name}" readonly>
+						<label class="input-group-text">등록시간</label>
+						<input name="post_time" type="text" class="form-control" th:value="${modify.postTime}" readonly>
+					</p>
+					<center><img style="width:250px; height: 250px;" th:src="@{/img/{img}(img=${modify.img_name})}"></center>
+					<p class="input-group">
+						<label class="input-group-text">승인 여부</label>
+						<select name="grade" class="form-control" th:selected="${modify.grade}"> 
+							<option value="0" selected hidden>대기</option>
+		               		<option value="1">승인</option>
+		               		<option value="2">거부</option>
+						</select>					
+					</p>
+					<center>
+						<button  type="submit"  id="agreeBtn">승인</button>
+						<button  type="submit"  id="denyBtn">거부</button>
+					</center>
+				</form>
+			</div>
+		</body>
+</html>

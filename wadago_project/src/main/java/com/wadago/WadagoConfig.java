@@ -15,5 +15,6 @@ public class WadagoConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/board/question");	
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/model/try.do");
 	}
 }

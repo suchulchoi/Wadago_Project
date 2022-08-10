@@ -1,0 +1,30 @@
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>  
+        
+    </head>
+    
+    <body>
+     <header th:insert="header_nav.html"></header>
+     <h1>결과 출력<h1>
+     <table class="table">
+					<thead>
+						<th>사진 게시자</th><th>사진 이름</th><th>사진</th><th>게시 시간</th><th>결과</th>	
+					</thead>
+					<tbody>
+						<tr th:each="im:${img}">
+							<td th:text="${im.user}"></td>
+							<td th:text="${im.img_name}"></td>
+							<td>
+								<img th:src="@{/img/{img}(img=${im.img_name})}">
+							</td>    
+							<td th:text="${#dates.format(im.postTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+							<td th:text="${im.grade}"></td>
+							<td><a th:href="@{/mem/imgModify(img_num=${im.img_num})}" style="text-decoration:none;">관리</a></td>
+						</tr>
+					</tbody>
+				</table>
+     
+    </body>
+</html>

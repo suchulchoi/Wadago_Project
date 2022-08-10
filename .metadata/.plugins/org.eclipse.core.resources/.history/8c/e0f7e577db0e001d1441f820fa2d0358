@@ -1,0 +1,78 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+		
+	</head>
+	<style>
+		img{
+			width:250px;
+			height:250px;
+			margin:auto;
+		}
+		.result{
+			font-size:x-large;
+			font-weight:900;
+		}
+		.resultBtn{
+			width:300px;
+			height:50px;
+			border:none;
+			padding:10px;
+			color:white;
+			border-radius:50px;
+			background-color:rgb(0, 128, 255);
+			margin:20px;
+		}
+		.imgList{
+			border-radius:20px;
+			display:flex;
+			text-align:center;
+			padding:20px;
+		}
+		.imgItem{
+			
+			border:none;
+			margin:20px;
+			text-align:center;
+			margin:auto;
+		}
+	</style>
+	<body>
+	<header th:insert="header_nav.html"></header>
+	<div class="container">
+		<br><br><br>
+		<center>
+			<h1 style="font-weight:900;">모델 분석 결과</h1>
+			
+			<br><br>
+			<div class="imgList">
+				<div class="imgItem"><img th:src="@{/img/{img}(img=${count}+'.jpg')}" alt="Test Image" class="NO-CACHE"></div>
+				
+			</div>
+			<br><br>
+		
+				<span class="result" id="resultText">결과 : [[${test1}]]</span>
+					
+
+			<br><br>
+			<form th:action="@{imgResult}" method="post" name="update" >
+				<p class="input-group" hidden>
+				  <input name="img_num" type="number" class="form-control" th:value="${count}">
+				  <input name="user" type="text" class="form-control" th:value="${session.memVo.id}">
+				  <input name="grade" type="number" class="form-control" value="0">
+				  <input name="img_name" type="text" class="form-control" th:value="${count}+'.jpg'">
+				  <input name="description" type="text" class="form-control" th:value="${test1}">	  
+				</p>
+				<button class="resultBtn" type="submit">
+						 결과 값 저장하기
+				</button>
+			</form>
+		</center>
+	<script>
+		const obj = JSON.parse('${test1}');
+
+		console.log(obj.result);
+		console.log(obj.label)
+	</script>
+  </body>
+</html>

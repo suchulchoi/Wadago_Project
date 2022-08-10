@@ -1,0 +1,5 @@
+package com.wadago.dto;
+
+public class FileDTO {
+
+}

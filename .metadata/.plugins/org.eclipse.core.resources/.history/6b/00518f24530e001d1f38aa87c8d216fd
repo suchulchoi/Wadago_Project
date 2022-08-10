@@ -1,0 +1,95 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+		
+	</head>
+	<style>
+		img{
+			width:250px;
+			height:250px;
+			margin:auto;
+		}
+		.result{
+			font-size:x-large;
+			font-weight:900;
+		}
+		.resultBtn{
+			width:300px;
+			height:50px;
+			border:none;
+			padding:10px;
+			color:white;
+			border-radius:50px;
+			background-color:rgb(0, 128, 255);
+			margin:20px;
+		}
+		.imgList{
+			border-radius:20px;
+			display:flex;
+			text-align:center;
+			padding:20px;
+		}
+		.imgItem{
+			
+			border:none;
+			margin:20px;
+			text-align:center;
+			margin:auto;
+		}
+	</style>
+	<script>
+		var nods = document.getElementsByClassName('NO-CACHE');
+		for (var i = 0; i < nods.length; i++)
+		{
+		    nods[i].attributes['src'].value += "?a=" + Math.random();
+		}
+		
+
+		window.onload = function() {
+	    if(!window.location.hash) {
+	        window.location = window.location + '#loaded';
+	        window.location.reload(true);
+	      window.location.reload(true);
+	    }
+		}
+	</script>
+	<body>
+	<header th:insert="header_nav.html"></header>
+	<div class="container">
+		<br><br><br>
+		<center>
+			<h1>모델 분석 결과</h1>
+			
+			<br><br>
+			<div class="imgList">
+				<div class="imgItem"><img th:src="@{/img/{img}(img=${count}+'.jpg')}" alt="Test Image" class="NO-CACHE"></div>
+				<div class="imgItem"><span><svg style="width:100px; height:100px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+															  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+															</svg></span></div>
+				<div class="imgItem"><img th:src="@{/img/{img}(img=${test1.toString()}+'.png')}" alt="Meta Image" class="NO-CACHE"></div>
+			</div>
+			<br><br>
+		
+				<span class="result" id="resultText">결과 : [[${test1}]]</span>
+					
+
+			<br><br>
+			<form th:action="@{imgResult}" method="post" name="update" >
+				<p class="input-group" hidden >
+				  <input name="img_num" type="number" class="form-control" th:value="${count}">
+				  <input name="user" type="text" class="form-control" th:value="${session.memVo.id}">
+				  <input name="grade" type="number" class="form-control" value="0">
+				  <input name="img_name" type="text" class="form-control" th:value="${count}+'.jpg'">
+				  <input name="description" type="text" class="form-control" th:value="${test1}">	  
+				</p>
+				
+			</form>
+		</center>
+	<script>
+		const obj = JSON.parse([[${test1}]]);
+
+		console.log(obj.result);
+		console.log(obj.label)
+	</script>
+  </body>
+</html>

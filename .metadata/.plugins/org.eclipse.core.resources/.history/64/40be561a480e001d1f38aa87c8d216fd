@@ -1,0 +1,15 @@
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>  
+        
+    </head>
+    
+    <body>
+     <header th:insert="header_nav.html"></header>
+	     <div class="container">
+	     	<br><br><br><br><br>
+	     	<center><h1>이용해주셔서 감사합니다.</h1></center>
+	     </div>
+     </body>
+ </html>

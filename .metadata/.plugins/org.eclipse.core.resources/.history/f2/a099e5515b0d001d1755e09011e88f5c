@@ -1,0 +1,13 @@
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>  
+        
+    </head>
+    
+    <body>
+     <header th:insert="header_nav.html"></header>
+     <h1>결과 출력<h1>
+     
+    </body>
+</html>

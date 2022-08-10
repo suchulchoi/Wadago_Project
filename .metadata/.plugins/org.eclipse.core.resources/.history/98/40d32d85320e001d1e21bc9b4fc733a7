@@ -1,0 +1,69 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+
+
+	</head>
+	<style>
+		#agreeBtn{
+			margin:10px;
+			padding:10px;
+			width:100px;
+			background-color:rgb(49, 152, 255);
+			color:white;
+			border:none;
+			border-radius:50px;
+			font-size:larger;
+			
+		}
+		#denyBtn{
+			margin:10px;
+			padding:10px;
+			width:100px;
+			background-color:red;
+			color:white;
+			border:none;
+			border-radius:50px;
+			font-size:larger;
+		}
+
+	</style>
+		<body>
+			<header th:insert="header_nav.html"></header>
+			<div class="container" th:each="modify:${img}">
+				<br><br>
+				<h1>사진상세</h1>	
+				<br><br><br><br>
+		        <div class="image-show" id="image-show"></div>	
+				<form th:action="@{updateGrade}" method="post" name="update">
+					<p class="input-group" hidden>
+						<input name="img_num" type="number" class="form-control" th:value="${modify.img_num}" readonly>	
+						<input name="user" type="text" class="form-control" th:value="${modify.user}" readonly>
+						<input name="img_name" type="text" class="form-control" th:value="${modify.img_name}" readonly>
+						<input name="post_time" type="text" class="form-control" th:value="${modify.postTime}" readonly>
+						<input name="grade" class="form-control" id="selection" th:value="${modify.grade}"> 
+					</p>
+					<center><img style="width:350px; height: 350px;" th:src="@{/img/{img}(img=${modify.img_name})}"></center>				
+					<br><br>
+					<center>
+						<button  type="submit" onclick="agreeImg()" id="agreeBtn">승인</button>
+						<button  type="submit" onclick="denyImg()" id="denyBtn">거부</button>
+					</center>
+				</form>
+			</div>
+		<script>
+			var agree=document.querySelector('#agreeBtn');
+			var deny=document.querySelector('#denyBtn');
+			var selection=document.querySelector('#selection');
+				console.log(selection.value);
+				
+			function agreeImg(){
+				selection.value=1;
+				console.log(selection.value);
+			}
+			function denyImg(){
+				selection.value=2;
+			}
+		</script>
+		</body>
+</html>

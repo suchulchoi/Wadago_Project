@@ -1,0 +1,101 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+		
+	</head>
+	<style>
+		img{
+			width:250px;
+			height:250px;
+			margin:auto;
+		}
+		.result{
+			font-size:x-large;
+			font-weight:900;
+		}
+		.resultBtn{
+			width:300px;
+			height:50px;
+			border:none;
+			padding:10px;
+			color:white;
+			border-radius:50px;
+			background-color:rgb(0, 128, 255);
+			margin:20px;
+		}
+		.imgList{
+			border-radius:20px;
+			display:flex;
+			text-align:center;
+			padding:20px;
+		}
+		.imgItem{
+			
+			border:none;
+			margin:20px;
+			text-align:center;
+			margin:auto;
+		}
+	</style>
+	<script>
+		var nods = document.getElementsByClassName('NO-CACHE');
+		for (var i = 0; i < nods.length; i++)
+		{
+		    nods[i].attributes['src'].value += "?a=" + Math.random();
+		}
+		
+
+		window.onload = function() {
+	    if(!window.location.hash) {
+	        window.location = window.location + '#loaded';
+	        window.location.reload(true);
+	      window.location.reload(true);
+	    }
+		}
+	</script>
+	<body>
+	<header th:insert="header_nav.html"></header>
+	<div class="container">
+		<br><br><br>
+		<center>
+			<h1>모델 분석 결과</h1>
+			
+			<br><br>
+			<div class="imgList">
+				<div class="imgItem"><img th:src="@{/img/{img}(img=${count}+'.jpg')}" alt="Test Image" class="NO-CACHE"></div>
+				<div class="imgItem"><span><svg style="width:100px; height:100px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+															  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+															</svg></span></div>
+				<div class="imgItem"><img src="/img/test.png" alt="Meta Image" class="NO-CACHE" th:if="${test1==1}"></div>
+			</div>
+			<br><br>
+		
+				<span class="result" id="resultText">결과 : [[${test1}]]</span>
+					
+
+			<br><br>
+			<form th:action="@{imgResult}" method="post" name="update" >
+				<p class="input-group" hidden >
+				  <input name="img_num" type="number" class="form-control" th:value="${count}">
+				  <input name="user" type="text" class="form-control" th:value="${session.memVo.id}">
+				  <input name="grade" type="number" class="form-control" value="0">
+				  <input name="img_name" type="text" class="form-control" th:value="${count}+'.jpg'">
+				  <input name="description" type="text" class="form-control" th:value="${test1}">	  
+				</p>
+				<button id="postBtn" class="resultBtn" type="submit">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+						  <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+						  <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+						</svg>&nbsp; 다시 해보기
+				</button>
+				
+				<button id="postBtn" class="resultBtn" type="submit" style="background-color: red;" onclick="location.href='/model/result/1'">
+						 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
+						  <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
+						</svg>&nbsp;다른 결과 목록 보러가기
+				</button>
+			</form>
+		</center>
+
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+
+
+	</head>
+		<body>
+			<header th:insert="header_nav.html"></header>
+			<div class="container" th:each="modify:${img}">
+				<h1>사진상세</h1>
+				
+		        <div class="image-show" id="image-show"></div>
+				
+				
+				<form th:action="@{updateGrade}" method="post" name="update">
+					<p class="input-group">
+						  <label class="input-group-text">사진 번호</label>
+						  <input name="img_num" type="number" class="form-control" th:value="${modify.img_num}" readonly>
+						  
+					</p>	
+					<p class="input-group">
+						  <label class="input-group-text">게시자</label>
+						  <input name="user" type="text" class="form-control" th:value="${modify.user}" readonly>
+						  
+					</p>	
+					<p class="input-group">
+						<label class="input-group-text">사진이름</label>
+						<input name="img_name" type="text" class="form-control" th:value="${modify.img_name}" readonly>
+					</p>
+					<p class="input-group">
+						<label class="input-group-text">등록시간</label>
+						<input name="post_time" type="text" class="form-control" th:value="${modify.postTime}" readonly>
+					</p>
+					<p class="input-group">
+						<label class="input-group-text">승인 여부</label>
+						<select name="grade" class="form-control" th:selected="${modify.grade}"> 
+							<option value="0" selected hidden>대기</option>
+		               		<option value="1">승인</option>
+		               		<option value="2">거부</option>
+						</select>					
+					</p>
+					
+					<button class="btn btn-primary" type="submit" style="float:right">등록</button>
+				</form>
+			</div>
+		</body>
+</html>

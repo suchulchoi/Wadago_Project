@@ -1,0 +1,5 @@
+package com.wadago.controller;
+
+public class FileUploadController {
+
+}

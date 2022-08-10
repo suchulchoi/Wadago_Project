@@ -1,0 +1,42 @@
+<html lang="ko" xmlns:th="http:/www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+	</head>
+	<style>
+	.background-wrap {
+		  display: flex;
+		  justify-content: default(flex-start);
+		  align-items: stretch(default);
+		}
+		
+		.content {
+		  display: flex;
+		  flex-direction: column;
+		}
+		
+		.content span {
+		  color: white;
+		}
+		
+		.content span:nth-child(1) {
+		  font-size: 120px;
+		  font-weight: bold;
+		}
+		
+		.content span:nth-child(2) {
+		  font-size: 30px;
+		}
+	</style>
+	<body style="background-image:url(../img/wadago.jpg); background-size:cover;">
+			<header th:insert="header_nav.html"></header>
+	<div class="text-on-img">
+  		<div class="background-wrap">
+    		<div class="content">
+      		<span>WADAGO</span>
+      		<span>Big Data Platform Based<br>AI Convergence Service</span>
+    		</div>
+  		</div>
+	</div>
+	</body>
+</html>

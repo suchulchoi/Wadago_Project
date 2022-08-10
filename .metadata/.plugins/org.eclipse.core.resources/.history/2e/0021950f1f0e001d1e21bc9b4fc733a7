@@ -1,0 +1,15 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+
+	</head>
+    <footer> 	  	
+	    	(주)HBI기술연구소 에이콘아카데미
+	    	<br>
+	    	대표 : 성영한 | TEL : 02-2231-6412
+	    	<br>
+	    	서울특별시 마포구 양화로 122 LAB7 빌딩 3층, 4층
+	    	<br> 
+   			COPYRIGHT(C) HBILAB. ALL RIGHTS RESERVED.
+	</footer>
+</html>

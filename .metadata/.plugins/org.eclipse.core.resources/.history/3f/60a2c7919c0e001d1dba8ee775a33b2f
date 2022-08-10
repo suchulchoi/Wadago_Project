@@ -1,0 +1,51 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	
+	</head>
+	<style>
+		.question{
+			
+			padding:30px;
+			border-radius:20px;
+		}
+		.qs_contents{
+		background-color:aliceblue;
+		border-radius:10px;
+		height:80px;
+		padding:10px;	
+	}
+	</style>
+	<body>
+		<header th:insert="header_nav.html"></header>
+	<div class="container">
+	<br><br><br>
+	<div class="question" th:each="modify:${question}">
+	  <div id="board_num" hidden>[[${modify.board_num}]] </div>	  
+		<p class="input-group" style="width:50%;">
+			  <label class="input-group-text">작성자</label>
+			  <input name="writer" type="text" class="form-control" th:value="${modify.writer}" readonly>
+			  <label class="input-group-text">작성 시간</label>
+			  <input name="post_time" type="text" class="form-control" th:value="${modify.postTime}" readonly>
+		</p>
+		<br>	
+		<div class="qs_contents"name="contents" th:text="${modify.contents}"></div>
+	</div>
+	<hr>
+	<h3>답변 작성</h3>
+	<br>
+	<form th:action="@{insertReply}" method="post" name="update">
+	  			<p class="input-group" hidden>
+				  <input name="comment_num" type="number" class="form-control" th:value="${count}+1">
+				  <input name="board_num" type="number" class="form-control" th:value="${num}" readonly>
+				  <input name="count" type="number" class="form-control" value="0" readonly>
+				  <input name="writer" type="text" class="form-control" th:value="${session.memVo.id}" readonly>
+				</p>
+				  <br>
+				  <input name="contents" type="text" class="form-control" style="height:150px; border:2px solid;"  placeholder="답변을 작성하세요.">
+				  <br><br>
+				  <button class="btn btn-primary" type="submit" style="float:right">답변 등록</button>
+		</form>
+	</div>
+	</body>
+</html>

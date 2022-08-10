@@ -1,7 +1,8 @@
-<html lnag="ko">
-    <head>
-        <meta charset="UTF-8">
-    </head>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+	</head>
     
 	<style>
 		html{
@@ -148,7 +149,7 @@
      	<br>
         <div id="wrapper">
             <div id="content">
-                <form action="/mem/memberUpdate" method="post" name="signup">
+                <form action="/mem/memberUpdate" method="post" name="signup" th:onsubmit="return updateCk()">
                 <div>
                     <h5 class="join_title">
                         <label for="id">아이디</label>
@@ -190,7 +191,7 @@
                 <div>
                     <h5 class="join_title"><label for="phoneNo">휴대전화</label></h5>
                     <span class="box int_mobile">
-                        <input type="tel" id="mobile" name="phone" class="int" maxlength="16" placeholder="(-)는 생략하고 입력해주세요" th:value="${member.phone}">
+                        <input type="tel" id="mobile" name="phone" class="int" maxlength="11" placeholder="(-)는 생략하고 입력해주세요" th:value="${member.phone}">
                     </span>
                     <span class="error_next_box"></span>    
                 </div>
@@ -226,35 +227,32 @@
 		var mobile = document.querySelector('#mobile');	
 		var error = document.querySelectorAll('.error_next_box');
 
+		phoneFormat();
+		birthFormat();
 
-		pw1.addEventListener("focusout", checkPw);
-		userName.addEventListener("focusout", checkName);	
-		email.addEventListener("focusout", isEmailCorrect);
-		mobile.addEventListener("focusout", checkPhoneNum);
-
-		
-		
 		function checkPw() {
 		    var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
 		    if(pw1.value === "") {
 		        error[1].innerHTML = "필수 정보입니다.";
 		        error[1].style.display = "block";
 		        pwMsg.style.color = "red";
-
+		        
+				return false;
 		    } else if(!pwPattern.test(pw1.value)) {
 		        error[1].innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
 		        pwMsg.innerHTML = "사용불가";
 		        pwMsg.style.paddingRight = "93px";
 		        error[1].style.display = "block";	        
 		        pwMsg.style.display = "block";
-		        pwMsg.style.color = "red";	       
-
+		        pwMsg.style.color = "red";	    
+		           
+				return false;
 		    } else {
 		        error[1].style.display = "none";
 		        pwMsg.innerHTML = "사용가능";
 		        pwMsg.style.display = "block";
 		        pwMsg.style.color = "#03c75a";
-
+				return true;
 		    }
 		}
 		
@@ -265,16 +263,19 @@
 		        error[2].style.color = "red";
 		        error[2].style.display = "block";
 
+	 			return false;
 		    } else if(!namePattern.test(userName.value) || userName.value.indexOf(" ") > -1) {
 		    	error[2].innerHTML = "이름을 정확히 입력하세요.(공백 사용 불가)";
 		    	error[2].style.color = "red";
 		    	error[2].style.display = "block";
-
+				
+				return false;
 		    } else {
-		    	error[2].innerHTML = "사용 가능";
-		    	error[2].style.display = "block";
-		    	error[2].style.color = "#08A600";
-
+		        error[2].style.display = "none";
+		        userName.innerHTML = "사용가능";
+		        userName.style.display = "block";
+		        userName.style.color = "#03c75a";
+				return true;
 		    }
 		}
 				
@@ -285,17 +286,20 @@
 		        error[4].innerHTML = "필수 정보입니다.";
 		        error[4].style.display = "block";
 		        error[4].style.color = "red";
-
+		        
+				return false;
 		    } else if(!isPhoneNum.test(mobile.value)) {
 		    	error[4].innerHTML = "형식에 맞지 않는 번호입니다.";
 		    	error[4].style.color = "red";
 		    	error[4].style.display = "block";
 
+				return false;
 		    } else {
-		    	error[4].innerHTML = "사용 가능";
-		    	error[4].style.display = "block";
-		    	error[4].style.color = "#08A600";
-
+		        error[4].style.display = "none";
+		        mobile.innerHTML = "사용가능";
+		        mobile.style.display = "block";
+		        mobile.style.color = "#03c75a";
+				return true;
 		    }
 		}
 		
@@ -307,34 +311,46 @@
 		        error[5].style.display = "block";
 		        error[5].style.color = "red"; 
 
+				return false;
 		    } else if(!emailPattern.test(email.value)) {
 		    	error[5].innerHTML = "양식에 맞게 작성해주세요.";
 		    	error[5].style.display = "block";
-		    	error[5].style.color = "red"; 
-
+		    	error[5].style.color = "red";
+		    	
+				return false;
 		    } else {
-		    	error[5].innerHTML = "사용가능";
-		    	error[5].style.display = "block";
-		    	error[5].style.color = "#08A600";
-
+		        error[5].style.display = "none";
+		        email.innerHTML = "사용가능";
+		        email.style.display = "block";
+		        email.style.color = "#03c75a";
+				return true;
 		    }
-		
 		}
 		
-		phoneFormat();
-		birthFormat();
-		
 		function phoneFormat() {
-			var format = document.querySelector('#mobile').value.split('-');
-			var str = format[0]+format[1]+format[2];
+			var format = document.querySelector('#mobile').value;
+			var str = format.substr(0,3) + format.substr(3,4) + format.substr(7,4);
 			document.querySelector('#mobile').value = str;
 		}
 			
 		function birthFormat() {
 			var format = document.querySelector('#birth1').value;
 			var str = format.substr(0,10);
+			
 			document.querySelector('#birth').value = str;
 		}
+		
+		function updateCk() {
+			
+			if(checkPw() == true && checkName() == true && isEmailCorrect() == true && checkPhoneNum() == true) {
+				return true;
+			}else {
+				return false;
+			}
+			
+			return false;
+		}
+
     </script>
     </body>
 </html>

@@ -1,0 +1,26 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	
+	</head>
+	<body>
+		<header th:insert="header_nav.html"></header>
+	<div class="container">
+	<br><br><br>
+	<h1>답변 작성</h1>
+	<br><br>
+	<form th:action="@{insertReply}" method="post" name="update">
+	  			<p class="input-group" hidden>
+				  <input name="comment_num" type="number" class="form-control" th:value="${count}+1">
+				  <input name="board_num" type="number" class="form-control" th:value="${num}" readonly>
+				  <input name="count" type="number" class="form-control" value="0" readonly>
+				  <input name="writer" type="text" class="form-control" th:value="${session.memVo.id}" readonly>
+				</p>
+				  <label class="input-group-text" style="width:9%">답변 내용</label>
+				  <input name="contents" type="text" class="form-control" style="height:200px;">
+				  <br><br>
+				  <button class="btn btn-primary" type="submit"  style="float:right">답변 등록</button>
+		</form>
+	</div>
+	</body>
+</html>

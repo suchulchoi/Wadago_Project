@@ -1,0 +1,14 @@
+<html lnag="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>  
+        
+    </head>
+    
+    <body>
+     <header th:insert="header_nav.html"></header>
+	     <div class="container">
+	     	<h1>감사합니다.</h1>
+	     </div>
+     </body>
+ </html>
